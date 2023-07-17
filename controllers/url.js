@@ -4,7 +4,7 @@ const shortid = require("shortid");
 require("dotenv").config({ path: "./config/.env" });
 const base_url = process.env.BASE_URL;
 module.exports = {
-  url: async (req, res) => {
+  postUrl: async (req, res) => {
     try {
       // Get original url from request body
       const { originalUrl } = req.body;
@@ -47,7 +47,21 @@ module.exports = {
         res.json({ message: "Please check the URL" }); // If the URL is invalid
       }
     } catch (err) {
-      res.json(err);
+      res.status(500).json(err);
+    }
+  },
+  getUrl: async (req, res) => {
+    const { urlId } = req.params;
+    try {
+      const urlDocument = await URL.find({ urlId }); // Get the URL document with the same urlId as the Params
+      if (urlDocument.length > 0) {
+        const originalUrl = urlDocument[0].originalUrl; //Get original url from the found docuemnts
+        res.redirect(originalUrl);
+      } else {
+        res.status(404).json({ message: "Link not found" });
+      }
+    } catch (err) {
+      res.status(500).json(err);
     }
   },
 };
