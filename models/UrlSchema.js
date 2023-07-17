@@ -5,14 +5,14 @@ const UrlSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  shortUrl: {
-    type: String,
-    required: true,
-  },
-  urlId: {
-    type: String,
-    required: true,
-  },
+  // shortUrl: {
+  //   type: String,
+  //   required: true,
+  // },
+  // urlId: {
+  //   type: String,
+  //   required: true,
+  // },
   clicks: {
     type: Number,
     required: true,
