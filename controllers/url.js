@@ -19,10 +19,10 @@ module.exports = {
         } else {
           // Create a new document
           try {
-            // * Generate a unique URL ID with shortid
+            // Generate a unique URL ID with shortid
             const id = shortid.generate();
+            // Create the short URL
             const shortUrl = `${base_url}/${id}`;
-            console.log(id);
             // create new document in the database
             await URL.create({
               originalUrl,
