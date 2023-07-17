@@ -1,7 +1,8 @@
 const validateUrl = require("../config/regex");
 const URL = require("../models/UrlSchema");
 const shortid = require("shortid");
-
+require("dotenv").config({ path: "./config/.env" });
+const base_url = process.env.BASE_URL;
 module.exports = {
   url: async (req, res) => {
     try {
@@ -20,19 +21,20 @@ module.exports = {
           try {
             // * Generate a unique URL ID with shortid
             const id = shortid.generate();
+            const shortUrl = `${base_url}/${id}`;
             console.log(id);
             // create new document in the database
             await URL.create({
-              originalUrl: originalUrl,
-              // shortUrl
+              originalUrl,
+              shortUrl,
               urlId: id,
               clicks: 0,
               date: new Date(),
             });
             // Respond with the same object
             res.json({
-              originalUrl: originalUrl,
-              // shortUrl
+              originalUrl,
+              shortUrl,
               urlId: id,
               clicks: 0,
               date: new Date(),
