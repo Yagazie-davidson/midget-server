@@ -1,13 +1,11 @@
 const validateUrl = require("../config/regex");
 const URL = require("../models/UrlSchema");
-// const { nanoid } = require("nanoid");
+const shortid = require("shortid");
 
 module.exports = {
   url: async (req, res) => {
-    // * Generate a unique URL ID with nanoid
-    // const urlId = nanoid();
-    // Get original url from request body
     try {
+      // Get original url from request body
       const { originalUrl } = req.body;
       // Check if the URL is Valid Using Regex
       const isURLValid = validateUrl(originalUrl);
@@ -20,10 +18,14 @@ module.exports = {
         } else {
           // Create a new document
           try {
+            // * Generate a unique URL ID with shortid
+            const id = shortid.generate();
+            console.log(id);
+            // create new document in the database
             await URL.create({
               originalUrl: originalUrl,
               // shortUrl
-              // urlId
+              urlId: id,
               clicks: 0,
               date: new Date(),
             });
@@ -31,7 +33,7 @@ module.exports = {
             res.json({
               originalUrl: originalUrl,
               // shortUrl
-              // urlId
+              urlId: id,
               clicks: 0,
               date: new Date(),
             });
