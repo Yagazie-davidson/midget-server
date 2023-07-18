@@ -16,7 +16,7 @@ module.exports = {
         const urlInTheDatabase = await URL.find({ originalUrl: originalUrl });
         if (urlInTheDatabase.length > 0) {
           // respond with the already created document
-          res.json({ orignal: urlInTheDatabase });
+          res.json(urlInTheDatabase[0]);
         } else {
           // Create a new document
           try {
